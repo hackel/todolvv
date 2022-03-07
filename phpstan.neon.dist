@@ -1,0 +1,20 @@
+includes:
+    - ./vendor/nunomaduro/larastan/extension.neon
+
+parameters:
+    paths:
+        - app
+
+    level: 7
+
+    ignoreErrors:
+        -
+            message: '#^Undefined variable: \$this$#'
+            path: tests
+
+    excludePaths:
+        - tests
+
+    checkGenericClassInNonGenericObjectType: false
+    checkMissingCallableSignature: true
+    checkMissingIterableValueType: false
