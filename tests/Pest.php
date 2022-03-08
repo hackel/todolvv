@@ -31,12 +31,12 @@ uses(Tests\TestCase::class)->in('Feature');
 
 expect()->extend(
     'toBeAfter',
-    fn(string|CarbonInterface $date) => Date::parse($this->value)->greaterThan(Date::parse($date)),
+    fn (string|CarbonInterface $date) => Date::parse($this->value)->greaterThan(Date::parse($date)),
 );
 
 expect()->extend(
     'toBeBefore',
-    fn(string|CarbonInterface $date) => Date::parse($this->value)->lessThan(Date::parse($date)),
+    fn (string|CarbonInterface $date) => Date::parse($this->value)->lessThan(Date::parse($date)),
 );
 
 /*

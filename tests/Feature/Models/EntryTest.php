@@ -9,9 +9,9 @@ use function Pest\Laravel\{actingAs, assertDatabaseHas, assertDatabaseMissing};
 
 uses(RefreshDatabase::class);
 
-beforeEach(fn() => $this->user = User::factory()->create());
+beforeEach(fn () => ($this->user = User::factory()->create()));
 
-it('retrieves a list of entries for the current user', function () {
+it('retrieves a list of entries for the current user', function (): void {
     /** @var \Illuminate\Database\Eloquent\Collection<int, Entry> $entries */
     $entries = Entry::factory()
         ->count(10)
@@ -20,30 +20,27 @@ it('retrieves a list of entries for the current user', function () {
 
     $response = actingAs($this->user)->getJson(route('entry.index'));
 
-    $response->assertStatus(200)
+    $response
+        ->assertStatus(200)
         ->assertSessionHasNoErrors()
         ->assertJsonStructure([
             'data' => [
-                '*' => [
-                    'text',
-                    'completed_at',
-                    'expires_at',
-                    'updated_at',
-                    'created_at',
-                ],
+                '*' => ['text', 'completed_at', 'expires_at', 'updated_at', 'created_at'],
             ],
         ])
         ->assertJsonCount(10, 'data');
 
     $entries->each(
-        fn($entry) => $response->assertJsonFragment(
-            $entry->only('text', 'completed_at', 'expires_at', 'updated_at', 'created_at')
-        )
+        fn ($entry) => $response->assertJsonFragment(
+            $entry->only('text', 'completed_at', 'expires_at', 'updated_at', 'created_at'),
+        ),
     );
 });
 
-it('creates a new Todo Entry', function () {
-    $expected = Entry::factory()->make()->toArray();
+it('creates a new Todo Entry', function (): void {
+    $expected = Entry::factory()
+        ->make()
+        ->toArray();
 
     $response = actingAs($this->user)->postJson(route('entry.store'), $expected);
 
@@ -51,22 +48,19 @@ it('creates a new Todo Entry', function () {
         ->assertStatus(201)
         ->assertSessionHasNoErrors()
         ->assertJsonStructure([
-            'data' => [
-                'uuid',
-                'text',
-                'completed_at',
-                'expires_at',
-                'updated_at',
-                'created_at',
-            ],
+            'data' => ['uuid', 'text', 'completed_at', 'expires_at', 'updated_at', 'created_at'],
         ])
         ->assertJson(['data' => $expected]);
 });
 
-it('updates an existing Todo Entry', function () {
-    $entry = Entry::factory()->for($this->user)->create(['updated_at' => Date::now()->subDay()]);
+it('updates an existing Todo Entry', function (): void {
+    $entry = Entry::factory()
+        ->for($this->user)
+        ->create(['updated_at' => Date::now()->subDay()]);
     $original = $entry->toArray();
-    $expected = Entry::factory()->make()->toArray();
+    $expected = Entry::factory()
+        ->make()
+        ->toArray();
 
     $response = actingAs($this->user)->putJson(route('entry.update', $entry), $expected);
 
@@ -74,14 +68,7 @@ it('updates an existing Todo Entry', function () {
         ->assertStatus(200)
         ->assertSessionHasNoErrors()
         ->assertJsonStructure([
-            'data' => [
-                'uuid',
-                'text',
-                'completed_at',
-                'expires_at',
-                'updated_at',
-                'created_at',
-            ],
+            'data' => ['uuid', 'text', 'completed_at', 'expires_at', 'updated_at', 'created_at'],
         ])
         ->assertJson(['data' => $expected]);
 
@@ -93,8 +80,10 @@ it('updates an existing Todo Entry', function () {
     ]);
 });
 
-it('deletes an existing Todo Entry', function () {
-    $entry = Entry::factory()->for($this->user)->create(['updated_at' => Date::now()->subDay()]);
+it('deletes an existing Todo Entry', function (): void {
+    $entry = Entry::factory()
+        ->for($this->user)
+        ->create(['updated_at' => Date::now()->subDay()]);
 
     $response = actingAs($this->user)->deleteJson(route('entry.destroy', $entry));
 

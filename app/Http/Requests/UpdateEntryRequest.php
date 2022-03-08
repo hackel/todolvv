@@ -24,8 +24,8 @@ class UpdateEntryRequest extends FormRequest implements DtoRequest
     public function rules(): array
     {
         return [
-            'text'         => 'string',
-            'expires_at'   => 'date|nullable',
+            'text' => 'string',
+            'expires_at' => 'date|nullable',
             'completed_at' => 'date|nullable',
         ];
     }
@@ -34,8 +34,8 @@ class UpdateEntryRequest extends FormRequest implements DtoRequest
     {
         return new UpdateEntryDTO(
             text: $this->input('text'),
-            expires_at: optional($this->input('expires_at'), fn($v) => Date::parse($v)),
-            completed_at: optional($this->input('completed_at'), fn($v) => Date::parse($v)),
+            expires_at: optional($this->input('expires_at'), fn ($v) => Date::parse($v)),
+            completed_at: optional($this->input('completed_at'), fn ($v) => Date::parse($v)),
         );
     }
 }

@@ -18,15 +18,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
-Route::middleware('auth:sanctum')->group(static function (Router $route) {
-    $route->get('/user', function (Request $request) {
-        return $request->user();
-    });
+Route::middleware('auth:sanctum')->group(static function (Router $route): void {
+    $route->get('/user', fn (Request $request) => $request->user());
 
     $route->apiResource('entry', EntryController::class);
 });
-

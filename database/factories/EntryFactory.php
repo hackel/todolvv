@@ -20,8 +20,8 @@ class EntryFactory extends Factory
     {
         return [
             'text' => $this->faker->sentence(),
-            'completed_at' => $this->faker->optional(.1)->dateTimeBetween('-1 year'),
-            'expires_at' => $this->faker->optional(.1)->dateTimeBetween('now', '1 year'),
+            'completed_at' => $this->faker->optional(0.1)->dateTimeBetween('-1 year'),
+            'expires_at' => $this->faker->optional(0.1)->dateTimeBetween('now', '1 year'),
         ];
     }
 }

@@ -1,14 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Http\Requests\{StoreEntryRequest, UpdateEntryRequest};
 use App\Http\Resources\EntryResource;
 use App\Models\Entry;
 use App\Services\EntryManager;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use Illuminate\Http\Response;
+use Illuminate\Http\{Request, Response};
 use Spatie\QueryBuilder\QueryBuilder;
 
 class EntryController extends Controller
@@ -47,8 +48,11 @@ class EntryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateEntryRequest $request, Entry $entry, EntryManager $entryManager): EntryResource
-    {
+    public function update(
+        UpdateEntryRequest $request,
+        Entry $entry,
+        EntryManager $entryManager,
+    ): EntryResource {
         $entryManager->update($entry, $request->toDTO());
 
         return EntryResource::make($entry);
