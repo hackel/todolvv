@@ -1,0 +1,6 @@
+{
+    "baseUrl": "http://laravel-9-todo.test",
+    "componentFolder": "cypress/components",
+    "darkMediaQuery": true,
+    "testFiles": "**/*spec.{js,jsx,ts,tsx}"
+}

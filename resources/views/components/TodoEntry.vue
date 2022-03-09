@@ -30,6 +30,7 @@ defineExpose({ update });
         v-if="edit"
         v-model="entryText"
         :autocomplete="false"
+        data-test="new-entry-field"
         density="compact"
         hide-details
         maxlength="16383"

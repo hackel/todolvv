@@ -26,8 +26,8 @@ export default defineConfig({
     define: { 'process.env': {} },
     resolve: {
         alias: {
-            '@': path.resolve(__dirname, 'resources/views'),
-            '@scripts': path.resolve(__dirname, 'resources/scripts'),
+            '@': path.resolve(__dirname, './resources/views'),
+            '@scripts': path.resolve(__dirname, './resources/scripts'),
         },
     },
     /* remove the need to specify .vue files https://vitejs.dev/config/#resolve-extensions

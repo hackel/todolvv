@@ -39,7 +39,7 @@ function updateEntry(entry: Entry) {
 <template>
     <v-card class="ma-6">
         <v-card-text>
-            <v-table fixed-header :height="tableHeight">
+            <v-table data-test="entries-table" fixed-header :height="tableHeight">
                 <template v-slot:default>
                     <thead>
                         <tr>
@@ -62,6 +62,7 @@ function updateEntry(entry: Entry) {
                             </td>
                             <td class="inline-flex space-x-2 px-3 py-2 whitespace-no-wrap">
                                 <v-btn
+                                    data-test="new-entry-button"
                                     icon="mdi-plus-thick"
                                     color="success"
                                     size="x-small"
@@ -72,6 +73,7 @@ function updateEntry(entry: Entry) {
                         <tr v-for="entry in entriesSortedByDate" :key="entry.id">
                             <td>
                                 <input
+                                    data-test="complete-checkbox"
                                     :name="entry.id"
                                     type="checkbox"
                                     v-model="entry.completed_at"
@@ -86,18 +88,21 @@ function updateEntry(entry: Entry) {
                             </td>
                             <td>
                                 <v-btn
+                                    data-test="edit-button"
                                     icon="mdi-pencil"
                                     color="primary"
                                     size="x-small"
                                     @click="editEntry(entry)"
                                 />
                                 <v-btn
+                                    data-test="duplicate-button"
                                     icon="mdi-content-duplicate"
                                     color="primary"
                                     size="x-small"
                                     @click="store.duplicateEntry(entry)"
                                 />
                                 <v-btn
+                                    data-test="remove-button"
                                     icon="mdi-delete-forever"
                                     color="error"
                                     size="x-small"

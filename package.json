@@ -1,6 +1,7 @@
 {
     "private": true,
     "scripts": {
+        "cypress:open": "cypress open",
         "serve": "vite preview",
         "build": "vite build",
         "dev": "npm run development",
@@ -13,6 +14,8 @@
         "production": "mix --production"
     },
     "devDependencies": {
+        "@cypress/vite-dev-server": "^2.2.2",
+        "@cypress/vue": "^3.1.1",
         "@inertiajs/inertia": "^0.11.0",
         "@inertiajs/inertia-vue3": "^0.6.0",
         "@inertiajs/progress": "^0.2.6",
@@ -26,6 +29,8 @@
         "@vuetify/vite-plugin": "^1.0.0-alpha.3",
         "autoprefixer": "^10.4.2",
         "axios": "^0.25",
+        "cypress": "^9.5.1",
+        "cypress-dark": "^1.8.3",
         "lodash": "^4.17.19",
         "postcss": "^8.4.6",
         "postcss-import": "^14.0.2",
