@@ -31,7 +31,7 @@ Route::get('/dashboard', static fn () => Inertia::render('Dashboard'))
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
-Route::get('/dashboard2', static fn () => Inertia::render('Dashboard2'))
+Route::get('/dashboard2', static fn () => Inertia::render('DashboardOld'))
     ->middleware(['auth', 'verified'])
     ->name('dashboard2');
 
