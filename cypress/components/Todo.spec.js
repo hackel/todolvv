@@ -18,14 +18,13 @@ describe('Todo Component', () => {
         cy.getBySel('entries-table').find('tbody > tr').should('have.length', 4);
     });
 
-    it('can add a new entry', () => {
+    it.only('can add a new entry', () => {
         cy.getBySel('new-entry-field').type('a new entry{Enter}');
 
         cy.getBySel('entries-table')
             .find('tbody > tr')
             .should('have.length', 5)
-            // TODO: Should be first!
-            .last()
+            .first()
             .should('contain.text', 'a new entry');
 
         cy.getBySel('new-entry-field').type('a second entry');
@@ -35,8 +34,7 @@ describe('Todo Component', () => {
         cy.getBySel('entries-table')
             .find('tbody > tr')
             .should('have.length', 6)
-            // TODO: Should be first!
-            .last()
+            .first()
             .should('contain.text', 'a second entry');
     });
 
@@ -46,7 +44,7 @@ describe('Todo Component', () => {
         cy.getBySel('entries-table')
             .find('tbody > tr')
             .should('have.length', 5)
-            .last()
+            .first()
             .find('[data-test=remove-button]')
             .click();
 
@@ -62,7 +60,7 @@ describe('Todo Component', () => {
         cy.getBySel('entries-table')
             .find('tbody > tr')
             .should('have.length', 5)
-            .last()
+            .first()
             .find('[data-test=duplicate-button]')
             .click();
 

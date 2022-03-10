@@ -40,6 +40,8 @@ class Entry extends Model
         'expires_at' => 'immutable_datetime',
     ];
 
+    protected $dateFormat = 'Y-m-d\TH:i:s.u';
+
     /** @var string */
     protected $uuidVersion = 'ordered';
 

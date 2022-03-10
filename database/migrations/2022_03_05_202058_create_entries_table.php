@@ -24,12 +24,12 @@ return new class() extends Migration {
                 ->constrained()
                 ->cascadeOnDelete();
             $table->text('text')->nullable();
-            $table->dateTime('completed_at')->nullable();
+            $table->dateTime('completed_at', 6)->nullable();
             $table
                 ->dateTime('expires_at')
                 ->nullable()
                 ->index();
-            $table->timestamps();
+            $table->timestamps(6);
         });
     }
 

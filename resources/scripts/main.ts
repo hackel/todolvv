@@ -8,7 +8,6 @@ import vuetify from './plugins/vuetify';
 // @ts-ignore
 import { loadFonts } from './plugins/webfontloader';
 import { createPinia } from 'pinia';
-import 'temporal-polyfill/global';
 
 loadFonts();
 

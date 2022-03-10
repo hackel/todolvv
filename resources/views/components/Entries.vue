@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import Entry from '@scripts/models/Entry';
 import TodoEntry from '@/components/TodoEntry.vue';
 import { useStore } from '@scripts/store';
@@ -8,9 +8,9 @@ import { orderBy } from 'lodash-es';
 
 const store = useStore();
 
-['Test entry 1', 'Test entry 2', 'Test entry 3']
-    .map(v => Entry.new({ text: v }))
-    .forEach(store.addEntry);
+onMounted(() => {
+    store.getEntries();
+});
 
 const newTodoEntry = ref<InstanceType<typeof TodoEntry> | null>(null);
 const selectAll = ref(false);
@@ -22,12 +22,8 @@ const entriesSortedByDate = computed((): Entry[] => {
     return orderBy(store.entries, 'created_at', 'desc');
 });
 
-function addEntry(entry: Entry) {
-    store.addEntry(entry);
-}
-
 function editEntry(entry: Entry) {
-    edit.value = entry.id;
+    edit.value = entry.uuid;
 }
 
 function updateEntry(entry: Entry) {
@@ -70,18 +66,23 @@ function updateEntry(entry: Entry) {
                                 />
                             </td>
                         </tr>
-                        <tr v-for="entry in entriesSortedByDate" :key="entry.id">
+                        <tr v-for="entry in entriesSortedByDate" :key="entry.uuid">
                             <td>
                                 <input
+                                    :checked="entry.completed_at !== null"
                                     data-test="complete-checkbox"
-                                    :name="entry.id"
+                                    :name="entry.uuid"
                                     type="checkbox"
-                                    v-model="entry.completed_at"
+                                    @change="
+                                        entry.isComplete()
+                                            ? store.incompleteEntry(entry)
+                                            : store.completeEntry(entry)
+                                    "
                                 />
                             </td>
                             <td>
                                 <TodoEntry
-                                    :edit="edit === entry.id"
+                                    :edit="edit === entry.uuid"
                                     :entry="entry"
                                     @update="updateEntry($event)"
                                 />
