@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { defineExpose, defineEmits, defineProps, ref } from 'vue';
 import Entry from '@scripts/models/Entry';
 
 const props = defineProps({
