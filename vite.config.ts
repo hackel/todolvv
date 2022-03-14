@@ -1,11 +1,9 @@
 import { defineConfig } from 'vite';
-// import tailwindcss from 'tailwindcss';
 import autoprefixer from 'autoprefixer';
 import laravel from 'vite-plugin-laravel';
 import vue from '@vitejs/plugin-vue';
 import inertia from './resources/scripts/vite/inertia-layout';
 import vuetify from '@vuetify/vite-plugin';
-
 import path from 'path';
 
 export default defineConfig({
@@ -20,7 +18,7 @@ export default defineConfig({
             autoImport: true,
         }),
         laravel({
-            postcss: [/*tailwindcss(),*/ autoprefixer()],
+            postcss: [autoprefixer()],
         }),
     ],
     define: { 'process.env': {} },
@@ -29,18 +27,6 @@ export default defineConfig({
             '@': path.resolve(__dirname, './resources/views'),
             '@scripts': path.resolve(__dirname, './resources/scripts'),
         },
+        extensions: ['.js', '.json', '.jsx', '.mjs', '.ts', '.tsx', '.vue'],
     },
-    /* remove the need to specify .vue files https://vitejs.dev/config/#resolve-extensions
-    resolve: {
-      extensions: [
-        '.js',
-        '.json',
-        '.jsx',
-        '.mjs',
-        '.ts',
-        '.tsx',
-        '.vue',
-      ]
-    },
-    */
 });

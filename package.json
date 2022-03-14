@@ -24,6 +24,7 @@
         "@types/lodash": "^4.14.179",
         "@types/lodash-es": "^4.17.6",
         "@types/pluralize": "^0.0.29",
+        "@types/webfontloader": "^1.6.34",
         "@vitejs/plugin-vue": "^2.2.4",
         "@vue/compiler-sfc": "^3.2.30",
         "@vuetify/vite-plugin": "^1.0.0-alpha.3",

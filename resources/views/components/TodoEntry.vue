@@ -37,7 +37,9 @@ defineExpose({ update });
         :persistent-placeholder="true"
         placeholder="Start typing a new to-do entry..."
         required
+        rounded
         single-line
+        variant="contained"
         v-on:keyup.enter="update"
     ></v-text-field>
 

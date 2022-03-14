@@ -7,7 +7,7 @@ const TEMPLATE_LAYOUT_REGEX = /<template +layout(?: *= *['"](?:(?:(\w+):)?(\w+))
  * A basic Vite plugin that adds a <template layout="name"> syntax to Vite SFCs.
  * It must be used before the Vue plugin.
  */
-export default (layouts: string = '@/views/layouts/'): Plugin => ({
+export default (layouts: string = '@/layouts/'): Plugin => ({
     name: PLUGIN_NAME,
     transform: (code: string) => {
         if (!TEMPLATE_LAYOUT_REGEX.test(code)) {
@@ -20,7 +20,7 @@ export default (layouts: string = '@/views/layouts/'): Plugin => ({
             TEMPLATE_LAYOUT_REGEX,
             (_, __, layoutName) => `
 			<script${isTypeScript ? ' lang="ts"' : ''}>
-			import layout from '${layouts}${layoutName ?? 'default'}.vue'
+			import layout from '${layouts}${layoutName ?? 'Default'}.vue'
 			export default { layout }
 			</script>
 			<template>

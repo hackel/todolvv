@@ -1,5 +1,6 @@
 arrowParens: "avoid"
 braceStyle: "psr-2"
+htmlWhitespaceSensitivity: "ignore"
 phpVersion: "8.1"
 printWidth: 100
 semi: true
