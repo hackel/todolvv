@@ -1,18 +1,45 @@
 <script setup>
-import { computed } from 'vue';
 import { Link } from '@inertiajs/inertia-vue3';
 
 const props = defineProps(['href', 'active']);
-
-const classes = computed(() =>
-    props.active
-        ? 'inline-flex items-center px-1 pt-1 border-b-2 border-indigo-400 text-sm font-medium leading-5 text-gray-900 focus:outline-none focus:border-indigo-700 transition  duration-150 ease-in-out'
-        : 'inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out',
-);
 </script>
 
 <template>
-    <Link :href="href" :class="classes">
+    <Link :href="href" class="nav-link px-1 pt-1 font-weight-medium" :class="{ active }">
         <slot />
     </Link>
 </template>
+
+<style scoped>
+:root {
+    --indigo-400: rgb(129 140 248);
+    --indigo-700: rgb(165 180 252);
+    --gray-300: rgb(209 213 219);
+    --gray-500: rgb(107 114 128);
+    --gray-700: rgb(55 65 81);
+}
+
+.nav-link {
+    border-bottom: 2px solid transparent;
+    font-size: 0.875rem; /* 14px */
+    line-height: 1.25rem; /* 20px */
+    color: var(--gray-500);
+    text-decoration: none;
+}
+
+.nav-link:focus {
+    outline: none;
+    border-color: var(--indigo-700);
+}
+
+.active {
+    border-color: var(--indigo-400);
+    color: rgb(17 24 39);
+}
+
+.active:hover,
+.active:focus {
+    color: var(--gray-700);
+    border-color: var(--gray-300);
+}
+</style>
