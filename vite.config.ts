@@ -1,10 +1,11 @@
 import { defineConfig } from 'vite';
 import autoprefixer from 'autoprefixer';
-import laravel from 'vite-plugin-laravel';
-import vue from '@vitejs/plugin-vue';
 import inertia from './resources/scripts/vite/inertia-layout';
-import vuetify from '@vuetify/vite-plugin';
+import laravel from 'vite-plugin-laravel';
 import path from 'path';
+import postcssNesting from 'postcss-nesting';
+import vue from '@vitejs/plugin-vue';
+import vuetify from '@vuetify/vite-plugin';
 
 export default defineConfig({
     build: {
@@ -18,7 +19,7 @@ export default defineConfig({
             autoImport: true,
         }),
         laravel({
-            postcss: [autoprefixer()],
+            postcss: [autoprefixer(), postcssNesting()],
         }),
     ],
     define: { 'process.env': {} },

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { defineEmits, defineProps } from 'vue';
 import Entry from '@scripts/models/Entry';
 import { useModelWrapper } from '@scripts/util/modelWrapper';
 

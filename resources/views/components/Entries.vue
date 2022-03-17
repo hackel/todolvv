@@ -13,7 +13,7 @@ onMounted(() => {
     store.getEntries();
 });
 
-const newEntry = ref<InstanceType<typeof TodoEntry> | null>(Entry.new());
+const newEntry = ref<Entry>(Entry.new());
 const selectAll = ref(false);
 const edit = ref<string | null>(null);
 
@@ -33,7 +33,7 @@ function updateEntry(entry: Entry) {
 }
 
 async function storeEntry() {
-    await store.addEntry(newEntry.value);
+    await store.addEntry(newEntry.value as Entry);
     newEntry.value = Entry.new();
 }
 </script>
@@ -46,9 +46,9 @@ async function storeEntry() {
                     <thead>
                         <tr>
                             <th><input type="checkbox" v-model="selectAll" /></th>
-                            <th class="text-left">To-Do</th>
-                            <th class="text-left">Expiration</th>
-                            <th class="text-left">Actions</th>
+                            <th style="width: 100%">To-Do</th>
+                            <th>Expiration</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
 
@@ -117,23 +117,25 @@ async function storeEntry() {
                             </td>
                             <td nowrap>
                                 <v-btn
+                                    class="mr-1"
+                                    color="primary"
                                     data-test="edit-button"
                                     icon="mdi-pencil"
-                                    color="primary"
                                     size="x-small"
                                     @click="editEntry(entry)"
                                 />
                                 <v-btn
+                                    class="mr-1"
+                                    color="primary"
                                     data-test="duplicate-button"
                                     icon="mdi-content-duplicate"
-                                    color="primary"
                                     size="x-small"
                                     @click="store.duplicateEntry(entry)"
                                 />
                                 <v-btn
+                                    color="error"
                                     data-test="remove-button"
                                     icon="mdi-delete-forever"
-                                    color="error"
                                     size="x-small"
                                     @click="store.deleteEntry(entry)"
                                 />

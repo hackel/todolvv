@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, defineEmits, defineProps } from 'vue';
+import { computed } from 'vue';
 import Entry from '@scripts/models/Entry';
 import { Temporal } from '@js-temporal/polyfill';
 
@@ -92,7 +92,7 @@ function formatLabel(instant: Temporal.Instant | null): string {
     max-width: 150px;
 }
 
-.v-input /deep/ input {
+.v-input:deep(input) {
     font-size: 0.8em;
     padding: 4px;
 }
