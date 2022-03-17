@@ -1,28 +1,20 @@
 <script setup lang="ts">
-import { defineExpose, defineEmits, defineProps, ref } from 'vue';
+import { defineEmits, defineProps } from 'vue';
 import Entry from '@scripts/models/Entry';
+import { useModelWrapper } from '@scripts/util/modelWrapper';
 
 const props = defineProps({
     edit: { type: Boolean, default: false },
     entry: { type: Entry, required: true },
+    modelValue: { type: String, required: true },
 });
 
 const emit = defineEmits<{
-    (e: 'update', value: Entry): void;
+    (e: 'update:modelValue', value: String): void;
+    (e: 'submit'): void;
 }>();
 
-const entryText = ref<string | null>(props.entry.text);
-
-async function update() {
-    let entry = props.entry;
-    if (entry && entryText.value) {
-        entry.text = entryText.value;
-        await emit('update', entry);
-        entryText.value = null;
-    }
-}
-
-defineExpose({ update });
+const entryText = useModelWrapper<string>(props, emit);
 </script>
 
 <template>
@@ -30,22 +22,22 @@ defineExpose({ update });
         v-if="edit"
         v-model="entryText"
         :autocomplete="false"
-        data-test="new-entry-field"
+        data-test="entry-field"
         density="compact"
         hide-details
         maxlength="16383"
         :persistent-placeholder="true"
-        placeholder="Start typing a new to-do entry..."
         required
         rounded
         single-line
         variant="contained"
-        v-on:keyup.enter="update"
+        v-on:keyup.enter="emit('submit')"
     ></v-text-field>
 
     <div
         v-else
-        v-text="entry.text"
+        data-test="entry-text"
+        v-text="entryText"
         :class="{ 'text-decoration-line-through': entry.completed_at }"
     />
 </template>

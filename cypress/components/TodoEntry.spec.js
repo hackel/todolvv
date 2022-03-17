@@ -12,10 +12,12 @@ const mountTodoEntry = props =>
     }).as('wrapper');
 
 describe('TodoEntry Component', () => {
-    it.only('shows a plain text string when edit=false', () => {
+    it('shows a plain text string when edit=false', () => {
+        const entry = Entry.new({ text: 'test entry' });
         mountTodoEntry({
-            entry: Entry.new({ text: 'test entry' }),
             edit: false,
+            entry,
+            modelValue: entry.text,
         });
 
         cy.get('input').should('not.exist');
@@ -23,34 +25,29 @@ describe('TodoEntry Component', () => {
     });
 
     it('shows a text input field when edit=true', () => {
+        const entry = Entry.new({ text: 'test entry' });
         mountTodoEntry({
-            entry: Entry.new({ text: 'test entry' }),
             edit: true,
+            entry,
+            modelValue: entry.text,
         });
 
-        cy.getBySel('new-entry-field')
-            .find('input')
-            .should('exist')
-            .and('have.value', 'test entry');
+        cy.getBySel('entry-field').find('input').should('exist').and('have.value', 'test entry');
     });
 
-    it('emits an update event when pressing enter', () => {
+    it('emits a submit event when pressing enter', () => {
+        const entry = Entry.new({ text: 'test entry' });
         mountTodoEntry({
-            entry: Entry.new({ text: 'test entry' }),
             edit: true,
+            entry,
+            modelValue: entry.text,
         });
 
-        cy.getBySel('new-entry-field')
-            .find('input')
-            .type(' something new{Enter}')
-            .should('have.value', '');
+        cy.getBySel('entry-field').find('input').type(' something new{Enter}');
+        cy.getBySel('entry-field').find('input').should('have.value', 'test entry something new');
 
-        cy.getBySel('new-entry-field')
-            .get('@wrapper')
-            .should(wrapper => {
-                expect(wrapper.emitted('update')).to.have.length(1);
-                const entry = wrapper.emitted('update')[0][0];
-                expect(entry.text).to.equal('test entry something new');
-            });
+        cy.get('@wrapper').should(wrapper => {
+            expect(wrapper.emitted('submit')).to.have.length(1);
+        });
     });
 });
