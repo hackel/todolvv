@@ -58,11 +58,9 @@ it('updates an existing Todo Entry', function (): void {
         ->for($this->user)
         ->create(['updated_at' => Date::now()->subDay()]);
     $original = $entry->toArray();
-    $expected = Entry::factory()
-        ->make()
-        ->toArray();
+    $expected = Entry::factory()->make();
 
-    $response = actingAs($this->user)->putJson(route('entry.update', $entry), $expected);
+    $response = actingAs($this->user)->putJson(route('entry.update', $entry), $expected->toArray());
 
     $response
         ->assertStatus(200)
@@ -70,13 +68,15 @@ it('updates an existing Todo Entry', function (): void {
         ->assertJsonStructure([
             'data' => ['uuid', 'text', 'completed_at', 'expires_at', 'updated_at', 'created_at'],
         ])
-        ->assertJson(['data' => $expected]);
+        ->assertJson(['data' => $expected->toArray()]);
 
     expect($response->json('data.updated_at'))->toBeAfter($original['updated_at']);
 
     assertDatabaseHas('entries', [
         'user_id' => $this->user->id,
-        ...$expected,
+        ...$expected->toArray(),
+        // DB can't handle ISO dates, it needs to be a DateTime to get converted.
+        'completed_at' => $expected->completed_at,
     ]);
 });
 
