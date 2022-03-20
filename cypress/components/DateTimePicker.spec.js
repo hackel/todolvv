@@ -22,8 +22,8 @@ describe('TodoEntry Component', () => {
         });
 
         cy.get('input').should('not.exist');
-        // TODO: Need to explicitly set TZ env var prior to launching Cypress or this will fail.
-        cy.getBySel('datetime-text').should('exist').and('contain.text', '01/01/2020, 06:00');
+        // TODO: Need to explicitly set TZ=UTC env var prior to launching Cypress or this will fail.
+        cy.getBySel('datetime-text').should('exist').and('contain.text', '1/1/2020, 12:00 PM');
     });
 
     it('shows a text input field when edit=true', () => {
@@ -37,7 +37,7 @@ describe('TodoEntry Component', () => {
         cy.getBySel('datetime-field')
             .find('input')
             .should('exist')
-            .and('have.value', '2020-01-01T06:00');
+            .and('have.value', '2020-01-01T12:00');
     });
 
     it('emits a submit event when pressing enter', () => {
