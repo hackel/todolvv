@@ -9,6 +9,7 @@ use Dyrynda\Database\Support\{BindsOnUuid, GeneratesUuid};
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Laravel\Scout\Searchable;
 
 /**
  * @property int                      $id
@@ -26,6 +27,7 @@ class Entry extends Model
     use BindsOnUuid;
     use GeneratesUuid;
     use HasFactory;
+    use Searchable;
 
     /**
      * The attributes that are mass assignable.
@@ -48,5 +50,23 @@ class Entry extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function getIsCompleteAttribute(): bool
+    {
+        return $this->completed_at !== null;
+    }
+
+    public function getIsExpiredAttribute(): bool
+    {
+        return (bool) $this->expires_at?->isPast();
+    }
+
+    /**
+     * Get the indexable data array for the model.
+     */
+    public function toSearchableArray(): array
+    {
+        return $this->only(['text', 'is_complete', 'is_expired']);
     }
 }

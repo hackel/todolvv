@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Http\Middleware;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Date;
 use Inertia\Middleware;
+use MeiliSearch\Client;
 
 class HandleInertiaRequests extends Middleware
 {
@@ -38,11 +40,34 @@ class HandleInertiaRequests extends Middleware
         return array_merge(parent::share($request), [
             'auth' => [
                 'user' => $request->user(),
+                'meiliSearchToken' => $this->getMeiliSearchToken($request),
             ],
             'versions' => [
                 'php' => PHP_VERSION,
                 'laravel' => \Illuminate\Foundation\Application::VERSION,
             ],
         ]);
+    }
+
+    /**
+     * Generate a search token to restrict searches to a specific user_id.
+     */
+    private function getMeiliSearchToken(Request $request): ?string
+    {
+        if (!$request->user()) {
+            return null;
+        }
+
+        $searchRules = (object) [
+            'entries' => (object) [
+                'filter' => 'user_id = ' . $request->user()->id,
+            ],
+        ];
+        $options = [
+            'apiKey' => config('scout.meilisearch.key'),
+            'expiresAt' => Date::now()->addDay(),
+        ];
+
+        return app(Client::class)->generateTenantToken($searchRules, $options);
     }
 }
