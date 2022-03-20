@@ -17,6 +17,7 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         // Use custom query grammar that adds microseconds to date serialization format.
+        // @phpstan-ignore-next-line
         match ($this->app->make('db.connection')->getDriverName()) {
             'mysql' => $this->app->make('db.connection')->setQueryGrammar(new MysqlGrammar()),
             'sqlite' => $this->app->make('db.connection')->setQueryGrammar(new SQLiteGrammar())
