@@ -60,11 +60,11 @@ class HandleInertiaRequests extends Middleware
 
         $searchRules = (object) [
             'entries' => (object) [
-                'filter' => 'user_id = ' . $request->user()->id,
+                'filter' => "user_id = {$request->user()->id}",
             ],
         ];
         $options = [
-            'apiKey' => config('scout.meilisearch.key'),
+            'apiKey' => config('scout.meilisearch.search_key'),
             'expiresAt' => Date::now()->addDay(),
         ];
 

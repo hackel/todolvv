@@ -1,4 +1,5 @@
-<script setup>
+<script setup lang="ts">
+import Autocomplete from '@/components/Autocomplete';
 import NavLink from '@/components/NavLink.vue';
 import { Link, usePage } from '@inertiajs/inertia-vue3';
 import { computed } from 'vue';
@@ -30,15 +31,7 @@ const navLinks = user.value
                 <v-spacer />
 
                 <v-responsive v-if="user" max-width="260">
-                    <v-text-field
-                        density="compact"
-                        flat
-                        hide-details
-                        rounded
-                        single-line
-                        solo-inverted
-                        variant="contained"
-                    ></v-text-field>
+                    <Autocomplete />
                 </v-responsive>
 
                 <v-menu v-if="user" offset-y>

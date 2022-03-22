@@ -15,8 +15,12 @@ export default class Entry {
         });
     }
 
-    static collection(entries: []) {
+    static collection(entries: []): Entry[] {
         return entries.map(v => Entry.new(v));
+    }
+
+    static from(args: Object): Entry {
+        return Entry.new(args);
     }
 
     clone(): Entry {

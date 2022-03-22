@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Illuminate\Foundation\Application;
+use App\Http\Controllers\EntryController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -24,3 +24,5 @@ Route::get('/dashboard', static fn () => Inertia::render('Dashboard'))
     ->name('dashboard');
 
 require __DIR__ . '/auth.php';
+
+Route::resource('/todo/entries', EntryController::class, ['only' => ['show']]);

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Contracts\Searchable as SearchableContract;
 use Dyrynda\Database\Casts\EfficientUuid;
 use Dyrynda\Database\Support\{BindsOnUuid, GeneratesUuid};
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -22,7 +23,7 @@ use Laravel\Scout\Searchable;
  * @property \Carbon\CarbonImmutable  $updated_at
  * @property \Carbon\CarbonImmutable  $created_at
  */
-class Entry extends Model
+class Entry extends Model implements SearchableContract
 {
     use BindsOnUuid;
     use GeneratesUuid;
@@ -67,6 +68,16 @@ class Entry extends Model
      */
     public function toSearchableArray(): array
     {
-        return $this->only(['text', 'is_complete', 'is_expired']);
+        return $this->only(['uuid', 'user_id', 'text', 'is_complete', 'is_expired', 'expires_at']);
+    }
+
+    public function getScoutFilterable(): array
+    {
+        return ['user_id'];
+    }
+
+    public function getScoutSortable(): array
+    {
+        return ['expires_at'];
     }
 }

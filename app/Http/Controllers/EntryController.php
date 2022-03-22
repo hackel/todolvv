@@ -4,67 +4,80 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\{StoreEntryRequest, UpdateEntryRequest};
 use App\Http\Resources\EntryResource;
 use App\Models\Entry;
-use App\Services\EntryManager;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use Illuminate\Http\{Request, Response};
-use Spatie\QueryBuilder\QueryBuilder;
+use Illuminate\Http\Request;
+use Inertia\{Inertia, Response};
 
 class EntryController extends Controller
 {
     /**
      * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
      */
-    public function index(Request $request): AnonymousResourceCollection
+    public function index()
     {
-        $entries = QueryBuilder::for(Entry::class)
-            ->allowedSorts(['created_at', 'updated_at', 'expires_at'])
-            ->where('user_id', $request->user()->id)
-            ->get();
+        //
+    }
 
-        return EntryResource::collection($entries);
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
     }
 
     /**
      * Store a newly created resource in storage.
+     *
+     * @return \Illuminate\Http\Response
      */
-    public function store(StoreEntryRequest $request, EntryManager $entryManager): EntryResource
+    public function store(Request $request)
     {
-        $entry = $entryManager->create($request->user(), $request->toDTO());
-
-        return EntryResource::make($entry);
+        //
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Entry $entry): EntryResource
+    public function show(Entry $entry): Response
     {
-        return EntryResource::make($entry);
+        return Inertia::render('Entries/Show', [
+            'entry' => EntryResource::make($entry),
+        ]);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Entry $entry)
+    {
+        //
     }
 
     /**
      * Update the specified resource in storage.
+     *
+     * @return \Illuminate\Http\Response
      */
-    public function update(
-        UpdateEntryRequest $request,
-        Entry $entry,
-        EntryManager $entryManager,
-    ): EntryResource {
-        $entryManager->update($entry, $request->toDTO());
-
-        return EntryResource::make($entry);
+    public function update(Request $request, Entry $entry)
+    {
+        //
     }
 
     /**
      * Remove the specified resource from storage.
+     *
+     * @return \Illuminate\Http\Response
      */
-    public function destroy(Entry $entry, EntryManager $entryManager): Response
+    public function destroy(Entry $entry)
     {
-        $entryManager->delete($entry);
-
-        return response()->noContent();
+        //
     }
 }

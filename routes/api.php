@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Http\Controllers\EntryController;
+use App\Http\Controllers\API\EntryController;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;

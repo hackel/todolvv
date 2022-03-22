@@ -6,6 +6,7 @@ import path from 'path';
 import postcssNesting from 'postcss-nesting';
 import vue from '@vitejs/plugin-vue';
 import vuetify from '@vuetify/vite-plugin';
+import vueJsx from '@vitejs/plugin-vue-jsx';
 
 export default defineConfig({
     build: {
@@ -13,14 +14,15 @@ export default defineConfig({
     },
     plugins: [
         inertia(),
+        laravel({
+            postcss: [autoprefixer(), postcssNesting()],
+        }),
         vue(),
         // https://github.com/vuetifyjs/vuetify-loader/tree/next/packages/vite-plugin
         vuetify({
             autoImport: true,
         }),
-        laravel({
-            postcss: [autoprefixer(), postcssNesting()],
-        }),
+        vueJsx(),
     ],
     define: { 'process.env': {} },
     resolve: {
