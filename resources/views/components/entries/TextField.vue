@@ -27,9 +27,8 @@ const entryText = useModelWrapper<string>(props, emit);
         maxlength="16383"
         :persistent-placeholder="true"
         required
-        rounded
         single-line
-        variant="contained"
+        variant="underlined"
         v-on:keyup.enter="emit('submit')"
     ></v-text-field>
 

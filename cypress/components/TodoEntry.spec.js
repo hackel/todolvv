@@ -1,4 +1,4 @@
-import TodoEntry from '@/components/TodoEntry.vue';
+import TodoEntry from '@/components/entries/TextField.vue';
 import { mount } from '@cypress/vue';
 import Entry from '@scripts/models/Entry';
 import vuetify from '@scripts/plugins/vuetify';

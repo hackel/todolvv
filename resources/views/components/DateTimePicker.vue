@@ -72,10 +72,9 @@ function formatLabel(instant: Temporal.Instant | null): string {
         density="compact"
         hide-details
         :min="today"
-        rounded
         single-line
         type="datetime-local"
-        variant="contained"
+        variant="underlined"
         v-on:keyup.enter="emit('submit')"
     ></v-text-field>
 
@@ -87,13 +86,18 @@ function formatLabel(instant: Temporal.Instant | null): string {
     />
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .v-input {
-    max-width: 150px;
-}
+    max-width: 165px;
 
-.v-input:deep(input) {
-    font-size: 0.8em;
-    padding: 4px;
+    &:deep(.v-field__input) {
+        padding-right: 5px;
+        padding-left: 5px;
+    }
+
+    &:deep(input) {
+        font-size: 0.8em;
+        padding: 4px;
+    }
 }
 </style>

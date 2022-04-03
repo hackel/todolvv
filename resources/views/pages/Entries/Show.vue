@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import TodoEntry from '@/components/TodoEntry/TodoEntry.vue';
-import Sidebar from '@/layouts/Sidebar';
+import TodoEntry from '@/components/entries/Entry.vue';
+import SidebarLayout from '@/layouts/Sidebar';
 import { Head } from '@inertiajs/inertia-vue3';
 import { useStore } from '@scripts/store';
 import { computed } from 'vue';
@@ -18,7 +18,7 @@ const hydratedEntry = computed(() => Entry.from(props.entry.data));
 <template>
     <Head title="To-Do Entry" />
 
-    <Sidebar>
+    <SidebarLayout>
         <template #sidebar>
             <v-list color="transparent">
                 <v-list-item v-for="n in 6" :key="n" link>
@@ -28,7 +28,5 @@ const hydratedEntry = computed(() => Entry.from(props.entry.data));
         </template>
 
         <TodoEntry :entry="hydratedEntry" />
-    </Sidebar>
+    </SidebarLayout>
 </template>
-
-<style scoped></style>

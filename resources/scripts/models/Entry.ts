@@ -4,7 +4,7 @@ export default class Entry {
     uuid: string;
     text: string;
     completed_at: Temporal.Instant | null;
-    private _expires_at: Temporal.Instant | null;
+    private _expires_at: Temporal.Instant | null = null;
     updated_at: Temporal.Instant;
     created_at: Temporal.Instant;
 
@@ -53,6 +53,14 @@ export default class Entry {
 
     isComplete(): boolean {
         return this.completed_at != null;
+    }
+
+    isExpired(): boolean {
+        if (this.expires_at === null) {
+            return false;
+        }
+
+        return Temporal.Instant.compare(this.expires_at, Temporal.Now.instant()) < 0;
     }
 
     toJSON() {

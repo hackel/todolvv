@@ -30,13 +30,13 @@ const navLinks = user.value
 
                 <v-spacer />
 
-                <v-responsive v-if="user" max-width="260">
+                <v-responsive v-if="user" class="search" max-width="260">
                     <Autocomplete />
                 </v-responsive>
 
                 <v-menu v-if="user" offset-y>
                     <template v-slot:activator="{ props }">
-                        <v-btn dark icon v-bind="props" class="mx-4">
+                        <v-btn dark icon v-bind="props" class="profile mx-4">
                             <v-avatar color="grey-darken-1" size="32" />
                         </v-btn>
                     </template>
@@ -65,3 +65,14 @@ const navLinks = user.value
         </v-main>
     </v-app>
 </template>
+
+<style scoped>
+.profile {
+    margin-top: -7px;
+}
+
+.search {
+    margin-top: -6px;
+    overflow: visible;
+}
+</style>

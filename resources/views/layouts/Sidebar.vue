@@ -11,7 +11,7 @@ import Default from '@/layouts/Default.vue';
         </v-col>
 
         <v-col>
-            <v-sheet min-height="70vh" rounded="lg" class="pb-1">
+            <v-sheet min-height="70vh" rounded="lg" class="pa-4">
                 <slot />
             </v-sheet>
         </v-col>

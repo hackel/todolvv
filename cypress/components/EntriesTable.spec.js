@@ -1,4 +1,4 @@
-import Todo from '@/components/Todo.vue';
+import EntriesTable from '@/components/entries/Table';
 import { mount } from '@cypress/vue';
 import vuetify from '@scripts/plugins/vuetify';
 import { createPinia } from 'pinia';
@@ -10,7 +10,7 @@ describe('Todo Component', () => {
         cy.viewport(1000, 800);
         cy.intercept('GET', '/api/entry', { fixture: 'entries.json' }).as('getEntries');
 
-        mount(Todo, {
+        mount(EntriesTable, {
             global: {
                 plugins: [createPinia(), vuetify],
             },
@@ -33,9 +33,10 @@ describe('Todo Component', () => {
     };
 
     it('Playground', () => {
-        cy.get('.v-card-text').should('be.visible');
-
-        cy.getBySel('entries-table').find('tbody > tr').should('have.length', 11);
+        cy.getBySel('entries-table')
+            .should('be.visible')
+            .find('tbody > tr')
+            .should('have.length', 11);
     });
 
     it('shows completed entries as checked', () => {
@@ -48,8 +49,8 @@ describe('Todo Component', () => {
             cy.get('[data-test=complete-checkbox] input').should('be.checked');
             cy.get('[data-test=entry-text]').should(
                 'have.css',
-                'text-decoration',
-                'line-through solid rgb(0, 0, 0)',
+                'text-decoration-line',
+                'line-through',
             );
         }
     });
@@ -160,6 +161,6 @@ describe('Todo Component', () => {
             .find('tbody > tr')
             .eq(3)
             .find('[data-test=entry-text]')
-            .should('have.css', 'text-decoration', 'line-through solid rgb(0, 0, 0)');
+            .should('have.css', 'text-decoration-line', 'line-through');
     });
 });
