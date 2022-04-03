@@ -16,30 +16,30 @@ class EntryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
-    }
+    // public function index()
+    // {
+    //     //
+    // }
 
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
-    }
+    // public function create()
+    // {
+    //     //
+    // }
 
     /**
      * Store a newly created resource in storage.
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
-    }
+    // public function store(Request $request)
+    // {
+    //     //
+    // }
 
     /**
      * Display the specified resource.
@@ -56,28 +56,28 @@ class EntryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function edit(Entry $entry)
-    {
-        //
-    }
+    // public function edit(Entry $entry)
+    // {
+    //     //
+    // }
 
     /**
      * Update the specified resource in storage.
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Entry $entry)
-    {
-        //
-    }
+    // public function update(Request $request, Entry $entry)
+    // {
+    //     //
+    // }
 
     /**
      * Remove the specified resource from storage.
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Entry $entry)
-    {
-        //
-    }
+    // public function destroy(Entry $entry)
+    // {
+    //     //
+    // }
 }
