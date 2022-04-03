@@ -54,7 +54,7 @@ class HandleInertiaRequests extends Middleware
      */
     private function getMeiliSearchToken(Request $request): ?string
     {
-        if (!$request->user()) {
+        if (config('scout.driver') !== 'meilisearch' || !$request->user()) {
             return null;
         }
 
