@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import EntriesTable from '@/components/entries/Table';
-import SidebarLayout from '@/layouts/Sidebar';
+import EntriesTable from '@/components/entries/Table.vue';
+import SidebarLayout from '@/layouts/Sidebar.vue';
 import { Head } from '@inertiajs/inertia-vue3';
 import { useStore } from '@scripts/store';
 

@@ -9,7 +9,7 @@ const props = defineProps({
 });
 
 const emit = defineEmits<{
-    (e: 'update:modelValue', value: String): void;
+    (e: 'update:modelValue', value: string): void;
     (e: 'submit'): void;
 }>();
 

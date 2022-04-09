@@ -1,30 +1,16 @@
 import { Temporal } from '@js-temporal/polyfill';
+import Model from '@scripts/models/Model';
 
-export default class Entry {
+export default class Entry extends Model {
     uuid: string;
-    text: string;
+    text = '';
     completed_at: Temporal.Instant | null;
     private _expires_at: Temporal.Instant | null = null;
     updated_at: Temporal.Instant;
     created_at: Temporal.Instant;
 
-    static new(args: Object = {}): Entry {
-        return Object.assign(new Entry(), {
-            text: '',
-            ...args,
-        });
-    }
-
-    static collection(entries: []): Entry[] {
-        return entries.map(v => Entry.new(v));
-    }
-
-    static from(args: Object): Entry {
-        return Entry.new(args);
-    }
-
     clone(): Entry {
-        return Entry.new(this);
+        return Entry.from(this);
     }
 
     complete(): this {

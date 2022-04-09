@@ -1,19 +1,19 @@
 <script setup lang="ts">
+import { Temporal } from '@js-temporal/polyfill';
+import pluralize from 'pluralize';
 import { computed, onMounted, ref } from 'vue';
 import DateTimePicker from '@/components/DateTimePicker.vue';
-import Entry from '@scripts/models/Entry';
 import EntryText from '@/components/entries/TextField.vue';
+import Entry from '@scripts/models/Entry';
 import { useStore } from '@scripts/store';
-import pluralize from 'pluralize';
-import { Temporal } from '@js-temporal/polyfill';
 
 const store = useStore();
 
-onMounted(() => {
-    store.getEntries();
+onMounted(async () => {
+    await store.getEntries();
 });
 
-const newEntry = ref<Entry>(Entry.new());
+const newEntry = ref<Entry>(new Entry());
 const selectAll = ref(false);
 const edit = ref<string | null>(null);
 
@@ -27,23 +27,24 @@ function editEntry(entry: Entry) {
     edit.value = entry.uuid;
 }
 
-function updateEntry(entry: Entry) {
-    store.updateEntry(entry);
+async function updateEntry(entry: Entry) {
+    await store.updateEntry(entry);
     edit.value = null;
 }
 
 async function storeEntry() {
     await store.addEntry(newEntry.value as Entry);
-    newEntry.value = Entry.new();
+    // eslint-disable-next-line require-atomic-updates
+    newEntry.value = new Entry();
 }
 </script>
 
 <template>
     <v-table data-test="entries-table" fixed-header :height="tableHeight">
-        <template v-slot:default>
+        <template #default>
             <thead>
                 <tr>
-                    <th><input type="checkbox" v-model="selectAll" /></th>
+                    <th><input v-model="selectAll" type="checkbox" /></th>
                     <th style="width: 100%">To-Do</th>
                     <th>Expiration</th>
                     <th>Actions</th>

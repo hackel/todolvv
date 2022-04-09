@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
-import Entry from '@scripts/models/Entry';
 import api from '@scripts/api';
+import Entry from '@scripts/models/Entry';
 
 export const useStore = defineStore('main', {
     state: () => ({
@@ -17,8 +17,8 @@ export const useStore = defineStore('main', {
         },
 
         async addEntry(entry: Entry) {
-            let newEntry = await api.entries.store(entry);
-            this.entries.push(Entry.new(newEntry.data));
+            const newEntry = await api.entries.store(entry);
+            this.entries.push(Entry.from(newEntry.data));
         },
 
         async completeEntry(entry: Entry) {
@@ -43,7 +43,7 @@ export const useStore = defineStore('main', {
         async deleteEntry(entry: Entry) {
             await api.entries(entry.uuid).destroy();
 
-            let pos = this.entries.indexOf(entry);
+            const pos = this.entries.indexOf(entry);
             if (pos !== -1) {
                 this.entries.splice(pos, 1);
             }

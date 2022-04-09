@@ -1,19 +1,30 @@
-import axios from '@scripts/axios';
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios from '@scripts/axios';
+import Model from '@scripts/models/Model';
+
+type AnyObject = Record<string, unknown>;
+
+interface ResourceResponse {
+    data: AnyObject;
+}
+
+type CollectionResponse = {
+    data: Array<AnyObject>;
+};
 
 type RouteId = number | string;
 type ApiResource = {
-    index(params?: any, config?: AxiosRequestConfig): Promise<any>;
-    store(data?: any, config?: AxiosRequestConfig): Promise<any>;
+    index(params?: AnyObject, config?: AxiosRequestConfig): Promise<CollectionResponse>;
+    store(data?: AnyObject | Model, config?: AxiosRequestConfig): Promise<ResourceResponse>;
     (id: RouteId): {
-        show(params?: any, config?: AxiosRequestConfig): Promise<any>;
-        update(data?: any, config?: AxiosRequestConfig): Promise<any>;
-        destroy(params?: any, config?: AxiosRequestConfig): Promise<AxiosResponse>;
+        show(params?: AnyObject, config?: AxiosRequestConfig): Promise<ResourceResponse>;
+        update(data?: AnyObject | Model, config?: AxiosRequestConfig): Promise<ResourceResponse>;
+        destroy(params?: AnyObject, config?: AxiosRequestConfig): Promise<AxiosResponse>;
     };
 };
 type AdditionalRoutes = {
-    scoped?: (scopedUrl: string, id: RouteId) => {};
-    global?: (baseUrl: string) => {};
+    scoped?: (scopedUrl: string, id: RouteId) => AnyObject;
+    global?: (baseUrl: string) => AnyObject;
 };
 
 /**
@@ -47,7 +58,7 @@ type AdditionalRoutes = {
  * resource(id).relation.index();
  * resource(id).relation(relationId).show();
  */
-export default function apiResource<T>(
+export default function apiResource(
     baseUrl: string,
     additionalRoutes: AdditionalRoutes = {},
 ): ApiResource {
@@ -62,19 +73,19 @@ export default function apiResource<T>(
                 /**
                  * Display the specified resource.
                  */
-                show: (params: any, config: AxiosRequestConfig) =>
+                show: (params: AnyObject, config: AxiosRequestConfig) =>
                     axios.get(`${baseUrl}/${id}`, { ...config, params }).then(r => r.data),
 
                 /**
                  * Update the specified resource in storage.
                  */
-                update: (data: any, config: AxiosRequestConfig) =>
+                update: (data: AnyObject, config: AxiosRequestConfig) =>
                     axios.put(`${baseUrl}/${id}`, data, config).then(r => r.data),
 
                 /**
                  * Remove the specified resource from storage.
                  */
-                destroy: (params: any, config: AxiosRequestConfig) =>
+                destroy: (params: AnyObject, config: AxiosRequestConfig) =>
                     axios.delete(`${baseUrl}/${id}`, { ...config, params }),
 
                 // Add any supplied scoped routes.
@@ -85,13 +96,13 @@ export default function apiResource<T>(
             /**
              * Display a listing of the resource.
              */
-            index: (params: any, config: AxiosRequestConfig) =>
+            index: (params: AnyObject, config: AxiosRequestConfig) =>
                 axios.get(baseUrl, { ...config, params }).then(r => r.data),
 
             /**
              * Store a newly created resource in storage.
              */
-            store: (data: any, config: AxiosRequestConfig) =>
+            store: (data: AnyObject, config: AxiosRequestConfig) =>
                 axios.post(baseUrl, data, config).then(r => r.data),
 
             // Add any supplied global routes.

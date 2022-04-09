@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import Autocomplete from '@/components/Autocomplete';
-import NavLink from '@/components/NavLink.vue';
 import { Link, usePage } from '@inertiajs/inertia-vue3';
 import { computed } from 'vue';
+import Autocomplete from '@/components/Autocomplete.vue';
+import NavLink from '@/components/NavLink.vue';
 
 const user = computed(() => usePage().props.value.auth?.user);
 
@@ -35,7 +35,7 @@ const navLinks = user.value
                 </v-responsive>
 
                 <v-menu v-if="user" offset-y>
-                    <template v-slot:activator="{ props }">
+                    <template #activator="{ props }">
                         <v-btn dark icon v-bind="props" class="profile mx-4">
                             <v-avatar color="grey-darken-1" size="32" />
                         </v-btn>

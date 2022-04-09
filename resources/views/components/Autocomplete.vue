@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { usePage } from '@inertiajs/inertia-vue3';
-import { useAutocomplete } from '@scripts/util/autocomplete';
-import { computed, onMounted } from 'vue';
 import { MeiliSearch } from 'meilisearch';
+import { computed, onMounted } from 'vue';
+import { useAutocomplete } from '@scripts/util/autocomplete';
 import '@algolia/autocomplete-theme-classic';
 
 const meiliSearchToken = computed<string>(() => usePage().props.value.auth.meiliSearchToken);
